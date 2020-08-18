@@ -12,8 +12,8 @@
 using namespace std;
 
 const char* helper =\
-R"(head £ºÊä³öÎÄ¼şÄÚÈİµÄºó¼¸ĞĞ£¨Ä¬ÈÏÎª 10 ĞĞ£©
-ÀıÈç£º
+R"(head ï¼šè¾“å‡ºæ–‡ä»¶å†…å®¹çš„åå‡ è¡Œï¼ˆé»˜è®¤ä¸º 10 è¡Œï¼‰
+ä¾‹å¦‚ï¼š
 tail C:\1.txt
 tail -n 20 C:\1.txt
 cat C:\1.txt | tail -n 20)";
@@ -21,7 +21,7 @@ cat C:\1.txt | tail -n 20)";
 class Queue;
 
 class Queue{
-    // ÊÜÏŞ¶ÓÁĞ£¬×î¶à´¢´æ _size ¸öÔªËØ
+    // å—é™é˜Ÿåˆ—ï¼Œæœ€å¤šå‚¨å­˜ _size ä¸ªå…ƒç´ 
     size_t _size;
     queue<string> que;
 public:
@@ -49,15 +49,6 @@ Queue& getInstance(size_t size = -1){
     return *que;
 }
 
-void readStdin(int line){
-    string buf;
-    auto que = getInstance();
-    for (int i = 0; i < line && cin.good(); ++i) {
-        getline(cin, buf);
-        que.push(buf);
-    }
-}
-
 template <typename T>
 inline void disPlay(T que_func){
     Queue que = que_func();
@@ -69,12 +60,12 @@ inline void disPlay(T que_func){
 int main(int argc, char** argv) {
 //    setlocale(LC_ALL, "");
     auto para = Parse(argc, argv, helper);
-    getInstance(para.first); // ³õÊ¼»¯ÊÜÏŞ¶ÓÁĞÈİ»ı
+    getInstance(para.first); // åˆå§‹åŒ–å—é™é˜Ÿåˆ—å®¹ç§¯
     string buf;
     if( !para.second || (para.second.get() == "-") ){
-        // ÈôµÚ¶ş¸ö²ÎÊıÎª¿Õ
+        // è‹¥ç¬¬äºŒä¸ªå‚æ•°ä¸ºç©º
         disPlay([&]()->Queue{
-            auto que = getInstance(); // ÔÚ lambda ÖĞĞèÒªÊÖ¶¯»ñÈ¡¶ÔÏó
+            auto que = getInstance(); // åœ¨ lambda ä¸­éœ€è¦æ‰‹åŠ¨è·å–å¯¹è±¡
             for (int i = 0; i < para.first && cin.good(); ++i) {
                 getline(cin, buf);
                 que.push(buf);
