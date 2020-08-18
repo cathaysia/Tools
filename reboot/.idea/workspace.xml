@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="reboot" targetName="reboot" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2ff890b3-0bc6-48c9-9008-01a5f9e41d9f" name="默认的" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ProjectId" id="1gBHRJQ3qZ55HE3DVLGUoucknXV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RunManager">
+    <configuration name="reboot" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="reboot" TARGET_NAME="reboot" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="reboot" RUN_TARGET_NAME="reboot">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2ff890b3-0bc6-48c9-9008-01a5f9e41d9f" name="默认的" comment="" />
+      <created>1597581055556</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597581055556</updated>
+      <workItem from="1597581060754" duration="1910000" />
+      <workItem from="1597583174248" duration="726000" />
+      <workItem from="1597622683621" duration="27000" />
+      <workItem from="1597642903705" duration="426000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="747" y="355" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597583305248">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="747" y="355" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1920.1050@0.30.1920.1050" timestamp="1597583305248" />
+    <state x="423" y="200" key="SettingsEditor" timestamp="1597583208099">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="423" y="200" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1597583208099" />
+    <state x="646" y="323" width="672" height="678" key="search.everywhere.popup" timestamp="1597582468375">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="646" y="323" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1597582468375" />
+  </component>
+</project>
