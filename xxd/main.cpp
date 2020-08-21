@@ -44,12 +44,18 @@ int main(int argc, char **argv) {
     string buf;
     string data;
     if (filename.empty()) {
-        while (getline(cin, buf)) data.append(buf);
+        while (getline(cin, buf)) {
+            data.append(buf);
+            data.append("\n");
+        };
         out(data);
     } else {
-        fstream fs(filename);
+        fstream fs(filename, ios::in | ios::out | ios::binary);
         if (!fs.is_open()) return 0;
-        while (getline(fs, buf)) data.append(buf);
+        while (getline(fs, buf)) {
+            data.append(buf);
+            data.append("\n");
+        };
         out(data);
     }
 }
