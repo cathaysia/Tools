@@ -58,7 +58,10 @@ int main(int argc, char **argv) {
     // 现在一行一行地进行解析
     char buf[LENGTH];
     try {
-        while (is->get(buf, LENGTH)) {
+        while (!is->eof()) {
+            for (int i = 0; i < 8 && !is->eof(); ++i){
+                buf[i] = is->get();
+            }
             left();
             center(buf);
             right(buf);
