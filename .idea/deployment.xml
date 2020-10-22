@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="远程主机 (bec687f4-4c69-47dc-9194-4f247dbf75a4)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.Mlm8dUCYno" local="$PROJECT_DIR$/teal" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/teal/cmake-build-release" />
+            <excludedPath local="true" path="$PROJECT_DIR$/teal/cmake-build-debug" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
