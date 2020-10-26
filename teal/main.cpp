@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by 31951 on 2020/9/19.
 //
 
@@ -10,11 +10,11 @@
 using namespace std;
 
 const char *helper = \
-R"(head ：输出文件内容的前几行（默认为 10 行）
+R"(head ：输出文件内容的后几行（默认为 10 行）
 例如：
-head C:\1.txt
-head -n 20 C:\1.txt
-cat C:\1.txt | head -n 20)";
+tail C:\1.txt
+tail -n 20 C:\1.txt
+cat C:\1.txt | tail -n 20)";
 
 
 int main(int argc, char **argv) {
@@ -34,9 +34,21 @@ int main(int argc, char **argv) {
     }
     // 获取输入源
     istream *is = &cin;
-    if (filename) is = new ifstream(filename, ios::in);
+    if (filename) {
+        is = new ifstream(filename, ios::in);
+        if (!is) exit(EXIT_FAILURE);
+    };
+    // 放置文件指针的位置
+    is->seekg(-1, ios::end);
+    for (int i = 0; i < line && (is->tellg() > 0); ++i) {
+        while (is->peek() != '\n' && is->tellg() > 0) {
+            is->seekg(-1, ios::cur);
+        }
+        if (is->tellg() > 0) is->seekg(-1, ios::cur);
+    }
     // 打印数据
     string buf;
+
     for (int i = 0; i < line && getline(*is, buf); ++i) {
         cout << buf;
         if (i < line - 1) cout << endl;
