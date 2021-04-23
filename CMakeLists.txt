@@ -10,14 +10,14 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 
-include(UseSphinxDoc)
-add_sphinx_doc(
-        ${PROJECT_SOURCE_DIR}/doc
-        ${PROJECT_SOURCE_DIR}/doc/_build
-        ${PROJECT_SOURCE_DIR}/doc/build/_doctrees
-        ${PROJECT_SOURCE_DIR}/doc/_build/html
+set(DOC_LANGUAGE zh_CN)
+include(UseBreatheDoc)
+add_breathe_doc(
+        ${PROJECT_SOURCE_DIR}
+        ${PROJECT_BINARY_DIR}/doc
+        ${PROJECT_SOURCE_DIR}/doc/Doxyfile.in
         ${PROJECT_SOURCE_DIR}/doc/conf.py.in
-        docs
+        html
         "HTML Documentation"
 )
 
