@@ -43,4 +43,3 @@ bool reboot(bool force) {
     }
     return true;
 }
-}

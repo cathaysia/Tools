@@ -1,0 +1,7 @@
+add_executable(grep grep.cpp)
+add_executable(head head.cpp)
+add_executable(teal teal.cpp)
+add_executable(xsel xsel.cpp)
+add_executable(xxd xxd.cpp)
+add_executable(reboot reboot.cpp)
+add_executable(cppname cppname.cpp)

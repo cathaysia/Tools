@@ -1,9 +1,56 @@
 # Tools
 重写了一部分常用的小工具
 
-# 如何使用
-编译好的文件在 bin 目录下，你可以直接下载使用。但是这个是 msvc 2019 amd 64 的，有些电脑可以没法运行
+# 构建
 
-# 如何编译
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
 
-使用 clion 打开此项目，然后点开任意一个子项目，在 CMakeList 上右键“加载 CMake 工程” 等一会，就可以看到 shift + f10 可以用了。
+现在，编译完成的软件在 `./build/bin` 目录下
+
+# 文档
+
+文档现在先暂时放到 README 下
+
+## xsel
+powershell 实际上是有类似 xsel 的命令：
+
+```powershell
+Set-Alias -name xsel -value Set-ClipBoard
+```
+
+当然，既然有 Set-ClipBoard，自然也有 Get-ClipBoard。
+这个命令主要是给 cmd 用的。
+
+相比 linux 下的 xsel 而言，这个只实现了两个功能：
+
+```shell
+cat 1.txt | xsel # powershell
+type 1.txt | xsel # cmd
+xsel -o
+```
+只有用来读写剪贴板的功能
+
+## xxd
+
+用来显示一个文件的二进制形式及其对应字符串
+整个文件会以 ASCII 的形式解析，所有不可见字符均被 FALLBACK 字符替换，这意味着你没办法用这个程序来看 utf-8 文件的 BOM 是多少
+而且这个程序的效率比较低，在于其他程序通过管道符使用时延迟比较明显
+
+### 使用
+
+```shell
+cat 1.txt | xxd
+xxd 1.txt
+xxd 1.txt | head -n 20
+```
+
+# 规范
+
+项目遵循
+
+- [Google 设计规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)
+- [Modern CMake#
+  How to structure your project](https://gitlab.com/CLIUtils/modern-cmake/-/blob/master/chapters/basics/structure.md)
