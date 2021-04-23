@@ -8,26 +8,39 @@
 #endif
 
 namespace Utils {
+
+/**
+ * 此函数主要是为了在程序中使用。
+ * MSVC 编译时无法解析 _ZNK4Json5ValueixEPKc 这种名字
+ *
+ */
+template<typename T>
+const char* getFullName() {
 #if defined(__GNUC__)
-
-template<typename T> constexpr const char* getFullName(const T& any) {
-    return abi::__cxa_demangle(typeid(any).name(), nullptr, nullptr, nullptr);
-}
-
-template<typename T> constexpr const char* getFullName() {
     return abi::__cxa_demangle(typeid(T).name(), nullptr, nullptr, nullptr);
-}
 #elif defined(_MSC_VER)
-    #include <typeinfo>
-template<typename T> const char* getFullName(const T& any) {
-    return typeid(any).name();
-}
-
-template<typename T> const char* getFullName() {
     return typeid(T).name();
+#endif
 }
 
+const char* getFullName(char* type_name) { // 这里类型必须是 char* 否则模板会匹配到另一个函数
+    // 这里需要将 type_name
+#if defined(__GNUC__)
+    return abi::__cxa_demangle(type_name, nullptr, nullptr, nullptr);
+#elif defined(_MSC_VER)
+    return type_name;
 #endif
+}
+
+template<typename T>
+const char* getFullName(const T& any) {
+#if defined(__GNUC__)
+    return abi::__cxa_demangle(typeid(any).name(), nullptr, nullptr, nullptr);
+#elif defined(_MSC_VER)
+    return typeid(any).name();
+#endif
+}
+
 }    // namespace Utils
 
 #endif    // TOOLS_UTILS_H

@@ -47,6 +47,12 @@ xxd 1.txt
 xxd 1.txt | head -n 20
 ```
 
+## cppname
+
+类似c++filt的软件
+
+c++filt 已经很好了，可以只能看函数的名字，没法看类型名，对 [getFullName](./include/Utils.h) 包装一下
+
 # 规范
 
 项目遵循
@@ -54,3 +60,4 @@ xxd 1.txt | head -n 20
 - [Google 设计规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)
 - [Modern CMake#
   How to structure your project](https://gitlab.com/CLIUtils/modern-cmake/-/blob/master/chapters/basics/structure.md)
+- [Modern CMake 最佳实践#交叉编译](https://www.jianshu.com/p/8abf754654c4)
