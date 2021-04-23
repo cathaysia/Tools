@@ -1,17 +1,19 @@
-#include <iostream>
 #include <Utils.h>
+
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
-//enum STATUS {
-//    SUCCESS = 0, // 成功
-//    MEM_FAIL = -1, // 内存分配失败
-//    VAILD = -2, // 无效名
-//    ARGU_INVALID = -3, // 参数无效
-//};
+// enum STATUS {
+//     SUCCESS = 0, // 成功
+//     MEM_FAIL = -1, // 内存分配失败
+//     VAILD = -2, // 无效名
+//     ARGU_INVALID = -3, // 参数无效
+// };
 
-constexpr const char *msg = R"(=============================================================================================
+constexpr const char *msg =
+    R"(=============================================================================================
 显示可读的 C++ 类型名
 使用方式: c++name [options] [mangled names]
 options 可为:
@@ -24,23 +26,24 @@ options 可为:
 =============================================================================================)";
 
 int main(int argc, char **argv) {
-    if (argc == 1) { // 若没有输入参数
+    if(argc == 1) {    // 若没有输入参数
         cout << msg << endl;
-        exit(EXIT_SUCCESS);;
+        exit(EXIT_SUCCESS);
+        ;
     }
     int status;
-    for (int i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+    for(int i = 1; i < argc; ++i) {
+        if(!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
             cout << msg << endl;
             continue;
         }
-        const char* result = Utils::getFullName(argv[i]);
-//        const char *result = abi::__cxa_demangle(argv[i], nullptr, nullptr, &status);
-//        if (status) {
-//            cout<<argv[i]<<": 输入的名称不合法!" << endl;
-//            continue;
-//        }
-        cout<< result << endl;
+        const char *result = Utils::getFullName(argv[i]);
+        //        const char *result = abi::__cxa_demangle(argv[i], nullptr, nullptr, &status);
+        //        if (status) {
+        //            cout<<argv[i]<<": 输入的名称不合法!" << endl;
+        //            continue;
+        //        }
+        cout << result << endl;
     }
     return 0;
 }

@@ -1,182 +1,154 @@
-# 参考 http://clang.llvm.org/docs/ClangFormatStyleOptions.html
 ---
-Language:        Cpp
-# BasedOnStyle:  LLVM
-
-# 访问说明符的偏移(public private)
-AccessModifierOffset: -4
-# 括号之后,水平对齐参数: Align DontAlign AlwaysBreak
-AlignAfterOpenBracket: Align
-# 对其连续的宏
-AlignConsecutiveMacros: AcrossEmptyLinesAndComments
-# 连续的赋值时,对齐所有的等号
-AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
-# 连续声明时，对齐所有声明的变量名
-AlignConsecutiveDeclarations: AcrossEmptyLinesAndComments
-# 对齐换行(使用反斜杠换行)的反斜杠 Left, Right
-AlignEscapedNewlines: Right
-# 水平对齐二元和三元表达式的操作数
-AlignOperands:   true
-# 对齐连续的尾随的注释
-AlignTrailingComments: true
-# 允许所有实参放在下一行
-AllowAllArgumentsOnNextLine: true
-# 允许初始化列表放在下一行
-AllowAllConstructorInitializersOnNextLine: true
-# 允许所有形参放在下一行
-AllowAllParametersOfDeclarationOnNextLine: true
-# 允许短的块放在同一行
-AllowShortBlocksOnASingleLine: Never
-# 允许短的case标签放在同一行
-AllowShortCaseLabelsOnASingleLine: false
-# 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
-AllowShortFunctionsOnASingleLine: None
-# 允许短的 Lambda 放在同一行
-AllowShortLambdasOnASingleLine: All
-# 是否允许短if单行 If true, if (a) return; 可以放到同一行
-AllowShortIfStatementsOnASingleLine: Never
-# 允许短的循环保持在同一行
-AllowShortLoopsOnASingleLine: false
-# 总是在定义返回类型后换行(deprecated)
-AlwaysBreakAfterDefinitionReturnType: None
-# 总是在定义返回类型后换行(deprecated)
-AlwaysBreakAfterReturnType: None
-# 总是在多行字符串前面换行
-AlwaysBreakBeforeMultilineStrings: true
-# 总是在模板声明后面换行
-AlwaysBreakTemplateDeclarations: MultiLine
-# false表示函数实参要么都在同一行，要么都各自一行
-BinPackArguments: true
-# false表示所有形参要么都在同一行，要么都各自一行
-BinPackParameters: true
-# 大括号换行，只有当BreakBeforeBraces设置为Custom时才有效
-BraceWrapping:
-  AfterCaseLabel:  false
-  AfterClass:      false
-  AfterControlStatement: "true"
-  AfterEnum:       false
-  AfterFunction:   false
-  AfterNamespace:  false
-  AfterObjCDeclaration: false
-  AfterStruct:     false
-  AfterUnion:      false
-  AfterExternBlock: false
-  BeforeCatch:     false
-  BeforeElse:      false
-  # 缩进大括号
-  IndentBraces:    false
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
-# 在二元运算符前换行: None(在操作符后换行), NonAssignment(在非赋值的操作符前换行), All(在操作符前换行)
-BreakBeforeBinaryOperators: None
-# 在大括号前换行: Attach(始终将大括号附加到周围的上下文), Linux(除函数、命名空间和类定义，与Attach类似),
-# Mozilla(除枚举、函数、记录定义，与Attach类似), Stroustrup(除函数定义、catch、else，与Attach类似),
-# Allman(总是在大括号前换行), GNU(总是在大括号前换行，并对于控制语句的大括号增加额外的缩进), WebKit(在函数前换行), Custom
-# 注：这里认为语句块也属于函数
-BreakBeforeBraces: Custom
-BreakBeforeInheritanceComma: false
-# 继承列表样式 BILS_BeforeColon: 在冒号之前和逗号之后中断继承列表
-#            BILS_BeforeComma: 在冒号和逗号之前中断继承列表，并将逗号与冒号对齐。
-#            BILS_AfterColon : 在冒号和逗号之后中断继承列表
-BreakInheritanceList: BeforeColon
-# 如果为 true 三元运算符将放置在换行符之后
-BreakBeforeTernaryOperators: true
-# 在初始化列表的冒号之前换行
-BreakConstructorInitializersBeforeComma: false
-# 初始化列表样式 BILS_BeforeColon: 在冒号之前和逗号之后中断继承列表
-#            BILS_BeforeComma: 在冒号和逗号之前中断继承列表，并将逗号与冒号对齐。
-#            BILS_AfterColon : 在冒号和逗号之后中断继承列表
-BreakConstructorInitializers: BeforeColon
-
-BreakAfterJavaFieldAnnotations: false
-BreakStringLiterals: true
-ColumnLimit:     80
-CommentPragmas:  '^ IWYU pragma:'
-CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
-Cpp11BracedListStyle: true
+DisableFormat: false
+IndentWidth: 4
+TabWidth: 4
+UseCRLF: false
+UseTab: Never
+ColumnLimit: 120
 DeriveLineEnding: true
-DerivePointerAlignment: false
-DisableFormat:   false
-ExperimentalAutoDetectBinPacking: false
+
+---
+Language: Cpp
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveBitFields: AcrossEmptyLinesAndComments
+AlignConsecutiveDeclarations: AcrossEmptyLinesAndComments
+AlignConsecutiveMacros: AcrossEmptyLinesAndComments
+AlignEscapedNewlines: Left
+AlignOperands: Align
+BinPackArguments: true
+AllowAllArgumentsOnNextLine: true
+BinPackParameters: true
+AllowAllConstructorInitializersOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLambdasOnASingleLine: None
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakTemplateDeclarations: MultiLine
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: "false"
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+BreakStringLiterals: true
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 4
+
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: false
+DerivePointerAlignment: true
+ExperimentalAutoDetectBinPacking: true
 FixNamespaceComments: true
 ForEachMacros:
   - foreach
   - Q_FOREACH
   - BOOST_FOREACH
-IncludeBlocks:   Preserve
+IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+  - Regex:           '^<ext/.*\.h>'
     Priority:        2
     SortPriority:    0
-  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
-    Priority:        3
-    SortPriority:    0
-  - Regex:           '.*'
+  - Regex:           '^<.*\.h>'
     Priority:        1
     SortPriority:    0
-IncludeIsMainRegex: '(Test)?$'
-IncludeIsMainSourceRegex: ''
-IndentCaseLabels: false
-IndentGotoLabels: true
-IndentPPDirectives: None
-# 缩进宽度
-IndentWidth:     4
+  - Regex:           '^<.*'
+    Priority:        2
+    SortPriority:    0
+  - Regex:           '.*'
+    Priority:        3
+    SortPriority:    0
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeIsMainSourceRegex: ""
+RawStringFormats:
+  - Language:        Cpp
+    Delimiters:
+      - cc
+      - CC
+      - cpp
+      - Cpp
+      - CPP
+      - 'c++'
+      - 'C++'
+    CanonicalDelimiter: ''
+    BasedOnStyle:    google
+  - Language:        TextProto
+    Delimiters:
+      - pb
+      - PB
+      - proto
+      - PROTO
+    EnclosingFunctions:
+      - EqualsProto
+      - EquivToProto
+      - PARSE_PARTIAL_TEXT_PROTO
+      - PARSE_TEST_PROTO
+      - PARSE_TEXT_PROTO
+      - ParseTextOrDie
+      - ParseTextProtoOrDie
+      - ParseTestProto
+      - ParsePartialTestProto
+    CanonicalDelimiter: ''
+    BasedOnStyle:    google
+IndentCaseBlocks: true
+IndentCaseLabels: true
+IndentExternBlock: AfterExternBlock
+IndentGotoLabels: false
+IndentPPDirectives: BeforeHash
 IndentWrappedFunctionNames: false
-JavaScriptQuotes: Leave
-JavaScriptWrapImports: true
-KeepEmptyLinesAtTheStartOfBlocks: true
-MacroBlockBegin: ''
-MacroBlockEnd:   ''
-MaxEmptyLinesToKeep: 1
-# 命名空间的缩进，可能值为： NI_None（不缩进）、
-#                       NI_Inner（命名空间中的命名空间有缩进）、
-#                       NI_All （都缩进）
-NamespaceIndentation: All
-ObjCBinPackProtocolList: Auto
-ObjCBlockIndentWidth: 2
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
-PenaltyBreakAssignment: 2
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 1000
-PenaltyBreakTemplateDeclaration: 10
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Right
-ReflowComments:  true
-SortIncludes:    CaseSensitive
+NamespaceIndentation: Inner
+ReflowComments: true
+SortIncludes: CaseSensitive
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
-SpaceAfterTemplateKeyword: true
+SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeCpp11BracedList: true
 SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeParens: Never
+SpaceBeforeRangeBasedForLoopColon: false
+SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: true
 SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles:  false
-SpacesInConditionalStatement: false
-SpacesInContainerLiterals: true
+SpacesBeforeTrailingComments: 4
+SpacesInAngles: false
 SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-SpaceBeforeSquareBrackets: false
-Standard:        Latest
+Standard: Auto
 StatementMacros:
   - Q_UNUSED
   - QT_REQUIRE_VERSION
-TabWidth:        4
-UseCRLF:         false
-UseTab:          Never
-...
-
+WhitespaceSensitiveMacros:
+  - STRINGIZE
+  - PP_STRINGIZE
+  - BOOST_PP_STRINGIZE
