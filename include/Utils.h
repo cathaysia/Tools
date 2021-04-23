@@ -12,7 +12,6 @@ namespace Utils {
 /**
  * 此函数主要是为了在程序中使用。
  * MSVC 编译时无法解析 _ZNK4Json5ValueixEPKc 这种名字
- *
  */
 template<typename T>
 const char* getFullName() {

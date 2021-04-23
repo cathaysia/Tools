@@ -22,7 +22,7 @@ function(ADD_BREATHE_DOC
     add_custom_target(
             doc-${TARGET_NAME}
             COMMAND ${DOXYGEN_EXECUTABLE} ${BUILD_DIR}/Doxyfile
-            COMMAND ${SPHINX_EXECUTABLE} -q -b ${TARGET_NAME} ${SOURCE_DIR}/doc ${BUILD_DIR}/html -c ${BUILD_DIR}
+#            COMMAND ${SPHINX_EXECUTABLE} -q -b ${TARGET_NAME} ${SOURCE_DIR}/doc ${BUILD_DIR}/html -c ${BUILD_DIR}
             COMMENT "构建文档目标： ${TARGET_NAME}"
     )
 endfunction()
