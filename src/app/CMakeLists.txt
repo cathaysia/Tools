@@ -1,16 +1,30 @@
 find_package(fmt CONFIG REQUIRED)
 find_package(cxxopts CONFIG REQUIRED)
-
-
-add_executable(grep grep.cpp)
-add_executable(head head.cpp)
-add_executable(teal teal.cpp)
-add_executable(xsel xsel.cpp)
-add_executable(xxd xxd.cpp)
-add_executable(reboot reboot.cpp)
-add_executable(cppname cppname.cpp)
-add_executable(bing_wallpaper bing_wallpaper.cpp)
-
+find_package(cpr CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 include(FindGetText)
-target_include_directories(bing_wallpaper PRIVATE ${GetText_INCLUDE})
-target_link_libraries(bing_wallpaper PRIVATE cxxopts::cxxopts fmt::fmt ${GetText_LIBRARIES})
+
+# list */app/*.cpp and create target
+file(GLOB_RECURSE cpp_src_list ${CMAKE_CURRENT_SOURCE_DIR}/*cpp)
+message(STATUS ${cpp_src_list})
+foreach(file ${cpp_src_list})
+    string(REGEX MATCH "app/.*" file ${file})
+    string(REPLACE "app/" "" file ${file})
+    string(REPLACE ".cpp" "" target_name ${file})
+    MESSAGE(STATUS "creating target ${target_name}")
+    add_executable(${target_name} ${file})
+    # project properties setting
+    target_include_directories(${target_name} PRIVATE ${GetText_INCLUDE})
+    target_link_libraries(${target_name} PRIVATE cxxopts::cxxopts cpr fmt::fmt spdlog::spdlog ${GetText_LIBRARIES})
+    if(MSVC)
+        target_compile_options(${target_name} PRIVATE /source-charset:utf-8)
+        # static build or not
+        string(FIND ${VCPKG_TARGET_TRIPLET} "static" vcpkg_static_build)
+            if(NOT ${vcpkg_static_build} STREQUAL -1)
+                MESSAGE(STATUS static build)
+                target_compile_options(bing_wallpaper PRIVATE /MT)
+            endif()
+    endif()
+endforeach()
+
+

@@ -1,0 +1,5 @@
+cpr
+gettext
+spdlog
+cxxopts
+fmt
