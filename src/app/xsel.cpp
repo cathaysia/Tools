@@ -1,6 +1,6 @@
 //
 // Created by 31951 on 2020/8/19.
-// ´úÂë´óÁ¿²Î¿¼£ºhttps://www.cnblogs.com/xuan52rock/p/6061155.html
+// ä»£ç å¤§é‡å‚è€ƒï¼šhttps://www.cnblogs.com/xuan52rock/p/6061155.html
 
 #include <windows.h>
 #include <iostream>
@@ -10,21 +10,21 @@
 using namespace std;
 
 const char *helper = \
-R"(xsel ½«Êı¾İ¸´ÖÆµ½ÏµÍ³¼ôÌù°å»òÕßÊÇ¶Á³ö£º
--h \t ÏÔÊ¾°ïÖúÄÚÈİ
--o \t ¶Á³öÏµÍ³¼ôÌù°åÄÚÈİ
-ÀıÈç£º
+R"(xsel å°†æ•°æ®å¤åˆ¶åˆ°ç³»ç»Ÿå‰ªè´´æ¿æˆ–è€…æ˜¯è¯»å‡ºï¼š
+-h \t æ˜¾ç¤ºå¸®åŠ©å†…å®¹
+-o \t è¯»å‡ºç³»ç»Ÿå‰ªè´´æ¿å†…å®¹
+ä¾‹å¦‚ï¼š
 cat 1.txt | xsel
 xsel -o)";
 
-// ¸´ÖÆÊı¾İÖÁ¼ôÇĞ°å
+// å¤åˆ¶æ•°æ®è‡³å‰ªåˆ‡æ¿
 bool Copy2Clipboard(const char* data, const size_t len){
     if(OpenClipboard(nullptr)){
         EmptyClipboard();
         auto clipBuffer = GlobalAlloc(GMEM_DDESHARE, len + 1);
-        auto buf = (char*)GlobalLock(clipBuffer); // Ëø¶¨¼ôÌù°å
+        auto buf = (char*)GlobalLock(clipBuffer); // é”å®šå‰ªè´´æ¿
         strcpy_s(buf, len + 1, data);
-        GlobalUnlock(clipBuffer); // ½âËø¼ôÌù°å
+        GlobalUnlock(clipBuffer); // è§£é”å‰ªè´´æ¿
         SetClipboardData(CF_TEXT, clipBuffer);
         CloseClipboard();
         return true;
@@ -32,7 +32,7 @@ bool Copy2Clipboard(const char* data, const size_t len){
     return false;
 }
 
-// ´Ó¼ôÇĞ°åÖĞÈ¡µÃÊı¾İ
+// ä»å‰ªåˆ‡æ¿ä¸­å–å¾—æ•°æ®
 optional<char*> getTextFromClipboard(){
     if(OpenClipboard(nullptr)){
         auto hMem = GetClipboardData(CF_TEXT);
@@ -48,7 +48,7 @@ optional<char*> getTextFromClipboard(){
 }
 
 template<typename T>
-void setClipboard(T t){ // t ÊÇÒ»¸ö·µ»ØÀàĞÍÎª string µÄ callable ÀàĞÍ
+void setClipboard(T t){ // t æ˜¯ä¸€ä¸ªè¿”å›ç±»å‹ä¸º string çš„ callable ç±»å‹
     string data = t();
     auto bak = getTextFromClipboard();
     bool success = Copy2Clipboard(data.c_str(), data.length());
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
-    // ½«Êı¾İ¸´ÖÆµ½¼ôÌù°å
+    // å°†æ•°æ®å¤åˆ¶åˆ°å‰ªè´´æ¿
     setClipboard([]()->string{
        string str;
        string buf;

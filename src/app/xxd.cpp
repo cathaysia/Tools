@@ -15,20 +15,20 @@ using namespace std;
 00000040: 792d 6e67 696e 7803 0000 0031 2e30 4000  y-nginx....1.0@.
 00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ...............
 
-Ò»ĞĞÒ»¹²ÊÇ 8*4 ¸ö16½øÖÆÊı, Ò»¹²ÊÇ 4*8*4 = 128 Î»
-×Ö½ÚÊıÒ»¹²ÊÇ 128/8 = 16 ¸ö×Ö½Ú
- ÔÚÖĞ¼ä²¿·ÖÖĞ£¬Ã¿ 2 ¸ö×Ö½Ú×é³ÉÒ»×é£¬Ò»¹²8×é
+ä¸€è¡Œä¸€å…±æ˜¯ 8*4 ä¸ª16è¿›åˆ¶æ•°, ä¸€å…±æ˜¯ 4*8*4 = 128 ä½
+å­—èŠ‚æ•°ä¸€å…±æ˜¯ 128/8 = 16 ä¸ªå­—èŠ‚
+ åœ¨ä¸­é—´éƒ¨åˆ†ä¸­ï¼Œæ¯ 2 ä¸ªå­—èŠ‚ç»„æˆä¸€ç»„ï¼Œä¸€å…±8ç»„
 
  */
 
-const size_t LENGTH = 16; // Ã¿ĞĞÊä³ö 16 ¸ö×Ö½Ú
-const unsigned char FALLBACK = '.'; // Èô×Ö·û²»ÊÇ ASCII ×Ö·û£¬Êä³ö´Ë×Ö·û
+const size_t LENGTH = 16; // æ¯è¡Œè¾“å‡º 16 ä¸ªå­—èŠ‚
+const unsigned char FALLBACK = '.'; // è‹¥å­—ç¬¦ä¸æ˜¯ ASCII å­—ç¬¦ï¼Œè¾“å‡ºæ­¤å­—ç¬¦
 
 const char *helper = \
-R"(xxd£º½«ÎÄ¼şÒÔ 16 ½øÖÆ´òÓ¡³öÀ´
-ÓÃ·¨£ºxxd -h [filename]
+R"(xxdï¼šå°†æ–‡ä»¶ä»¥ 16 è¿›åˆ¶æ‰“å°å‡ºæ¥
+ç”¨æ³•ï¼šxxd -h [filename]
 
-ÀıÈç£º
+ä¾‹å¦‚ï¼š
 xxd -h
 xxd 1.txt
 cat 1.txt | xxd)";
@@ -42,20 +42,20 @@ void right(const char *);
 int main(int argc, char **argv) {
     string filename;
     for (int i = 1; i < argc; ++i) {
-        // ½âÎö²ÎÊı
+        // è§£æå‚æ•°
         if (!strcmp(argv[i], "-h") | !strcmp(argv[i], "--help")) {
             cout << helper << endl;
             return 0;
         }
         filename = argv[i];
     }
-    // »ñÈ¡ÊäÈëÁ÷
+    // è·å–è¾“å…¥æµ
     istream *is = nullptr;
     if (filename.empty()) is = &cin;
     else is = new ifstream(filename, ios::in | ios::binary);
-    // ´ò¿ªÒì³£
+    // æ‰“å¼€å¼‚å¸¸
     is->exceptions(is->exceptions() | ios::failbit | ios::badbit);
-    // ÏÖÔÚÒ»ĞĞÒ»ĞĞµØ½øĞĞ½âÎö
+    // ç°åœ¨ä¸€è¡Œä¸€è¡Œåœ°è¿›è¡Œè§£æ
     char buf[LENGTH];
     try {
         while (!is->eof()) {
@@ -83,7 +83,7 @@ void left() {
 void center(const char *str) {
     uint16_t buf = 0;;
     uint8_t *buf_mul = (uint8_t *) &buf;
-    // Ò»´ÎÊä³öÁ½¸ö×Ö½Ú£¬Ò»¹²16¸ö×Ö½Ú£¬ĞèÒªÊä³ö8´Î
+    // ä¸€æ¬¡è¾“å‡ºä¸¤ä¸ªå­—èŠ‚ï¼Œä¸€å…±16ä¸ªå­—èŠ‚ï¼Œéœ€è¦è¾“å‡º8æ¬¡
     for (int i = 0; i < 16; i += 2) {
         buf_mul[0] = str[i];
         buf_mul[1] = str[i + 1];
