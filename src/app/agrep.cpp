@@ -40,14 +40,17 @@ std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
     return type;
 }
 
-int main(int argc, char** argv) {
+void set_cmd_flags(cxxopts::Options& options) { }
+
+int  main(int argc, char** argv) {
     setlocale(LC_ALL, "");
     bindtextdomain(Config::PACKAGE, Config::LOCALEDIR);
     textdomain(Config::PACKAGE);
     // cmd parse
-    cxxopts::Options options(_("grep"), _("Search for PATTERNS in each FILE"));
+    cxxopts::Options options(_("agrep"), _("Search for PATTERNS in each FILE"));
     options.allow_unrecognised_options();
     options.show_positional_help();
+    // clang-format off
     options.add_options(_("Pattern selection and interpretation"))
         ("T,regex-pattern", _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),cxxopts::value<std::string>())
         ("e,regexp", _("use PATTERNS for matching"), cxxopts::value<std::string>())
@@ -59,7 +62,9 @@ int main(int argc, char** argv) {
         //            ("V,version", "display version information and exit")
         ("help", _("display this help text and exit"));
 
-    options.add_options("debug")("log-level", _("set log level"), cxxopts::value<std::string>());
+    options.add_options("debug")
+        ("log-level", _("set log level"), cxxopts::value<std::string>());
+    // clang-format on
     options.parse_positional("regexp");
     auto result = options.parse(argc, argv);
     try {
@@ -75,7 +80,11 @@ int main(int argc, char** argv) {
             spdlog::set_level(spdlog::level::critical);
         else if(level == "trace")
             spdlog::set_level(spdlog::level::trace);
-    } catch(const std::exception& e) { spdlog::set_level(spdlog::level::off); }
+    } catch(const std::exception& e) {
+        // clang-format off
+        spdlog::set_level(spdlog::level::off);
+        // clang-format on
+    }
 
     if(result["help"].as<bool>()) {
         std::cout << options.help();

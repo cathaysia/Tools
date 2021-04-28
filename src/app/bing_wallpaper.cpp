@@ -9,7 +9,10 @@
 #include <cpr/cpr.h>
 #include <fmt/format.h>
 #include <libintl.h>
-#include <spdlog/spdlog.h>
+#ifdef fprintf
+    #undef fprintf
+    #include <spdlog/spdlog.h>
+#endif
 #include <windows.h>
 
 #include <chrono>

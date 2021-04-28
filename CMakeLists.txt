@@ -3,8 +3,11 @@ cmake_minimum_required(VERSION 3.15)
 project(aTools VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 17)
 
+message(STATUS ${CMAKE_BINARY_DIR})
 # 设置二进制输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+message(STATUS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 # 设置 CMake 模块路径
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
@@ -31,6 +34,7 @@ add_breathe_doc(
         "HTML Documentation"
 )
 
+# 强制要求源码文件编码为 utf-8 (without BOM)
 if(MSVC)
     add_compile_options(/source-charset:utf-8)
     string(FIND ${VCPKG_TARGET_TRIPLET} "static" vcpkg_static_build)
@@ -39,4 +43,13 @@ if(MSVC)
     endif()
 endif()
 
+# 安装
+file(GLOB_RECURSE install_exe_file_list ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/*.exe)
+file(GLOB_RECURSE install_dll_file_list ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/*.dll)
+file(GLOB_RECURSE install_so_file_list ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/*.so)
+install(FILES
+        ${install_file_list}
+        ${install_dll_file_list}
+        ${install_so_file_list}
+        DESTINATION bin)
 
