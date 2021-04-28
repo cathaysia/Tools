@@ -1,17 +1,13 @@
 ﻿//
 // Created by 31951 on 2020/10/22.
 //
-/**
- *  现在 grep 只考虑从 stdout 里读取数据
- *
- *  目前只实现 grep -i, grep -v, grep + regex
- *
- */
+
 #include <Config.h>
 #include <libintl.h>
 #include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
+#include <fstream>
 #include <iostream>
 #include <regex>
 
@@ -19,7 +15,7 @@ using namespace std;
 
 #define _(str) (gettext(str))
 
-std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
+inline std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
     using namespace std;
     regex::flag_type type = regex::ECMAScript;
     if(pattern == "basic") type = regex ::basic;
@@ -40,9 +36,7 @@ std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
     return type;
 }
 
-void set_cmd_flags(cxxopts::Options& options) { }
-
-int  main(int argc, char** argv) {
+int main(int argc, char** argv) {
     setlocale(LC_ALL, "");
     bindtextdomain(Config::PACKAGE, Config::LOCALEDIR);
     textdomain(Config::PACKAGE);
@@ -54,6 +48,7 @@ int  main(int argc, char** argv) {
     options.add_options(_("Pattern selection and interpretation"))
         ("T,regex-pattern", _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),cxxopts::value<std::string>())
         ("e,regexp", _("use PATTERNS for matching"), cxxopts::value<std::string>())
+        ("F, FILE", _(""), cxxopts::value<std::string>())
         ("i,ignore-case",_("ignore case distinctions in patterns and data"))
         ("no-ignore-case", _("do not ignore case " "distinctions (default)"));
 
@@ -65,7 +60,7 @@ int  main(int argc, char** argv) {
     options.add_options("debug")
         ("log-level", _("set log level"), cxxopts::value<std::string>());
     // clang-format on
-    options.parse_positional("regexp");
+    options.parse_positional({ "regexp", "FILE" });
     auto result = options.parse(argc, argv);
     try {
         auto level = result["log-level"].as<std::string>();
@@ -101,9 +96,6 @@ int  main(int argc, char** argv) {
         exit(EXIT_SUCCESS);
     }
 
-    bool        bit_exclude = result["v"].as<bool>();    // -v
-    //    bool bit_sensitive = result["i"].as<bool>();    // -i 默认为大小写敏感
-
     std::string pattern_type;
     try {
         pattern_type = result["T"].as<std::string>();
@@ -113,14 +105,28 @@ int  main(int argc, char** argv) {
     // 构造正则表达式
     auto     pattern = std::make_shared<std::regex>(regex_str, set_pattern_flags(pattern_type, result["i"].as<bool>()));
 
+    //    std::shared_ptr<std::istream> fs = std::make_shared<std::istream>(&cin);
     istream* fs      = &cin;
-    string   tmp;
-    smatch   math_result;
+    // 设置文件
+    try {
+        auto filename = result["FILE"].as<std::string>();
+        spdlog::debug("read data from {}", filename);
+        if(filename != "-") fs = new ifstream(filename, ios::in);
+    } catch(std::exception& e) {
+        // do nothing
+        spdlog::debug("read data from stdin");
+    }
+    string tmp;
+    smatch math_result;
     // 进行解析
+
     while(!fs->eof()) {
         getline(*fs, tmp);
         regex_search(tmp, math_result, *pattern);
-        if(!(math_result.empty() ^ bit_exclude)) cout << tmp << endl;    // empty 同或 exclude
+        if(!(math_result.empty() ^ (result["v"].as<bool>())) && !(tmp.empty()))
+            cout << tmp << endl;    // empty 同或 exclude
     }
+    // 析构
+    if(fs != &cin) delete fs;
     return 0;
 }
