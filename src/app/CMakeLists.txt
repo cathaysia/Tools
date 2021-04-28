@@ -2,7 +2,9 @@ find_package(fmt CONFIG REQUIRED)
 find_package(cxxopts CONFIG REQUIRED)
 find_package(cpr CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-include(FindGetText)
+find_package(Intl REQUIRED)
+include(FindGettext)
+find_package(Gettext REQUIRED)
 
 # list */app/*.cpp and create target
 file(GLOB_RECURSE cpp_src_list ${CMAKE_CURRENT_SOURCE_DIR}/*cpp)
@@ -14,8 +16,8 @@ foreach(file ${cpp_src_list})
     MESSAGE(STATUS "creating target ${target_name}")
     add_executable(${target_name} ${file})
     # project properties setting
-    target_include_directories(${target_name} PRIVATE ${GetText_INCLUDE})
-    target_link_libraries(${target_name} PRIVATE cxxopts::cxxopts cpr fmt::fmt spdlog::spdlog_header_only ${GetText_LIBRARIES})
+    target_include_directories(${target_name} PRIVATE ${Intl_INCLUDE_DIRS})
+    target_link_libraries(${target_name} PRIVATE cxxopts::cxxopts cpr fmt::fmt spdlog::spdlog_header_only ${Intl_LIBRARIES})
     if(MSVC)
         target_compile_options(${target_name} PRIVATE /source-charset:utf-8)
         # static build or not
