@@ -7,52 +7,114 @@
  *  目前只实现 grep -i, grep -v, grep + regex
  *
  */
-#include <iostream>
+#include <Config.h>
+#include <libintl.h>
+#include <spdlog/spdlog.h>
+
+#include <cstdio>
 #include <cstring>
+#include <cxxopts.hpp>
+#include <iostream>
 #include <regex>
 
 using namespace std;
 
-const char *helper = \
-R"(grep ：过滤重定向的内容
-例如：
-cat 1.txt | grep s
-cat 1.txt | grep -i s
-使用 egrep 风格的正则表达式进行过滤
--i 大小写不敏感
--v 反向选择)";
+#define _(str) (gettext(str))
+
+std::regex::flag_type set_pattern_flags(const string &pattern, bool icase) {
+    using namespace std;
+    regex::flag_type type = regex::ECMAScript;
+    if(pattern == "basic") type = regex ::basic;
+    else if(pattern == "extended")
+        type = regex::extended;
+    else if(pattern == "awk")
+        type = regex::awk;
+    else if(pattern == "grep")
+        type = regex::grep;
+    else if(pattern == "egrep")
+        type = regex::egrep;
+    else if(pattern == "optimize")
+        type = regex::optimize;
+    if(icase) {
+        type |= regex::icase;
+        return type;
+    }
+    return type;
+}
 
 int main(int argc, char **argv) {
-    bool bit_exclude = false; // -v
-    bool bit_sensitive = false; // -i 默认为大小写敏感
-    string regex_str;
+    setlocale(LC_ALL, "");
+    bindtextdomain(Config::PACKAGE, Config::LOCALEDIR);
+    textdomain(Config::PACKAGE);
+    // cmd parse
+    cxxopts::Options options(_("grep"), _("Search for PATTERNS in each FILE"));
+    options.add_options(_("Pattern selection and interpretation"))(
+        "T,regex-pattern",
+        _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),
+        cxxopts::value<std::string>())(
+        "e,regexp",
+        _("use PATTERNS for matching"),
+        cxxopts::value<std::string>())("i,ignore-case",
+                                       _("ignore case distinctions in patterns and data"))("no-ignore-case",
+                                                                                           _("do not ignore case "
+                                                                                             "distinctions (default)"));
+    options.add_options(_("Miscellaneous"))("v,invert-match", _("select non-matching lines"))
+        //            ("V,version", "display version information and exit")
+        ("help", _("display this help text and exit"));
+    options.add_options("debug")("log-level", _("set log level"), cxxopts::value<std::string>());
 
-    // 判断参数
-    for (int i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help") || !strcmp(argv[i], "/h")) {
-            cout << helper << endl;
-            return 0;
-        } else if (!bit_exclude && !strcmp(argv[i], "-v"))
-            bit_exclude = true;
-        else if (!bit_sensitive && !strcmp(argv[i], "-i"))
-            bit_sensitive = true;
-        else
-            regex_str = argv[i];
+    auto result = options.parse(argc, argv);
+    try {
+        auto level = result["log-level"].as<std::string>();
+        if(level == "debug") spdlog::set_level(spdlog::level::debug);
+        else if(level == "info")
+            spdlog::set_level(spdlog::level::info);
+        else if(level == "warn")
+            spdlog::set_level(spdlog::level::warn);
+        else if(level == "err")
+            spdlog::set_level(spdlog::level::err);
+        else if(level == "critical")
+            spdlog::set_level(spdlog::level::critical);
+        else if(level == "trace")
+            spdlog::set_level(spdlog::level::trace);
+
+    } catch(const std::exception &e) { spdlog::set_level(spdlog::level::off); }
+
+    if(result["help"].as<bool>()) {
+        std::cout << options.help();
+        exit(EXIT_SUCCESS);
+    }
+
+    string regex_str;
+    try {
+        regex_str = result["e"].as<std::string>();
+        spdlog::debug("the PATTERN is {}", regex_str);
+    } catch(const std::domain_error &e) {
+        spdlog::debug("no PATTERN input!");
+        std::cout << options.help();
+        exit(EXIT_SUCCESS);
+    }
+
+    bool        bit_exclude = result["v"].as<bool>();    // -v
+    //    bool bit_sensitive = result["i"].as<bool>();    // -i 默认为大小写敏感
+
+    std::string pattern_type;
+    try {
+        pattern_type = result["T"].as<std::string>();
+    } catch(const std::exception &e) {
+        // do nothing
     }
     // 构造正则表达式
-    regex *pattern = nullptr;
-    if (!bit_sensitive) pattern = new regex(regex_str, regex::egrep); // 大小写敏感
-    else pattern = new regex(regex_str, regex::egrep | regex::icase);
+    auto     pattern = std::make_shared<std::regex>(regex_str, set_pattern_flags(pattern_type, result["i"].as<bool>()));
 
-    istream *fs = &cin;
-    string tmp;
-    smatch math_result;
+    istream *fs      = &cin;
+    string   tmp;
+    smatch   math_result;
     // 进行解析
-    while (!fs->eof()) {
+    while(!fs->eof()) {
         getline(*fs, tmp);
         regex_search(tmp, math_result, *pattern);
-        if (!(math_result.empty() ^ bit_exclude)) cout << tmp << endl; // empty 同或 exclude
+        if(!(math_result.empty() ^ bit_exclude)) cout << tmp << endl;    // empty 同或 exclude
     }
-
     return 0;
 }

@@ -6,7 +6,7 @@ include(FindGetText)
 
 # list */app/*.cpp and create target
 file(GLOB_RECURSE cpp_src_list ${CMAKE_CURRENT_SOURCE_DIR}/*cpp)
-message(STATUS ${cpp_src_list})
+
 foreach(file ${cpp_src_list})
     string(REGEX MATCH "app/.*" file ${file})
     string(REPLACE "app/" "" file ${file})
@@ -15,7 +15,7 @@ foreach(file ${cpp_src_list})
     add_executable(${target_name} ${file})
     # project properties setting
     target_include_directories(${target_name} PRIVATE ${GetText_INCLUDE})
-    target_link_libraries(${target_name} PRIVATE cxxopts::cxxopts cpr fmt::fmt spdlog::spdlog ${GetText_LIBRARIES})
+    target_link_libraries(${target_name} PRIVATE cxxopts::cxxopts cpr fmt::fmt spdlog::spdlog_header_only ${GetText_LIBRARIES})
     if(MSVC)
         target_compile_options(${target_name} PRIVATE /source-charset:utf-8)
         # static build or not

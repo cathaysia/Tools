@@ -29,4 +29,3 @@ find_path(
         NAMES libintl.h
         HINTS ${HINT_PATH}/include
 )
-message(STATUS ${GetText_LIBRARIES})
