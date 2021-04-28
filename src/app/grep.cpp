@@ -11,8 +11,6 @@
 #include <libintl.h>
 #include <spdlog/spdlog.h>
 
-#include <cstdio>
-#include <cstring>
 #include <cxxopts.hpp>
 #include <iostream>
 #include <regex>
@@ -21,7 +19,7 @@ using namespace std;
 
 #define _(str) (gettext(str))
 
-std::regex::flag_type set_pattern_flags(const string &pattern, bool icase) {
+std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
     using namespace std;
     regex::flag_type type = regex::ECMAScript;
     if(pattern == "basic") type = regex ::basic;
@@ -42,27 +40,27 @@ std::regex::flag_type set_pattern_flags(const string &pattern, bool icase) {
     return type;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     setlocale(LC_ALL, "");
     bindtextdomain(Config::PACKAGE, Config::LOCALEDIR);
     textdomain(Config::PACKAGE);
     // cmd parse
     cxxopts::Options options(_("grep"), _("Search for PATTERNS in each FILE"));
-    options.add_options(_("Pattern selection and interpretation"))(
-        "T,regex-pattern",
-        _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),
-        cxxopts::value<std::string>())(
-        "e,regexp",
-        _("use PATTERNS for matching"),
-        cxxopts::value<std::string>())("i,ignore-case",
-                                       _("ignore case distinctions in patterns and data"))("no-ignore-case",
-                                                                                           _("do not ignore case "
-                                                                                             "distinctions (default)"));
-    options.add_options(_("Miscellaneous"))("v,invert-match", _("select non-matching lines"))
+    options.allow_unrecognised_options();
+    options.show_positional_help();
+    options.add_options(_("Pattern selection and interpretation"))
+        ("T,regex-pattern", _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),cxxopts::value<std::string>())
+        ("e,regexp", _("use PATTERNS for matching"), cxxopts::value<std::string>())
+        ("i,ignore-case",_("ignore case distinctions in patterns and data"))
+        ("no-ignore-case", _("do not ignore case " "distinctions (default)"));
+
+    options.add_options(_("Miscellaneous"))
+        ("v,invert-match", _("select non-matching lines"))
         //            ("V,version", "display version information and exit")
         ("help", _("display this help text and exit"));
-    options.add_options("debug")("log-level", _("set log level"), cxxopts::value<std::string>());
 
+    options.add_options("debug")("log-level", _("set log level"), cxxopts::value<std::string>());
+    options.parse_positional("regexp");
     auto result = options.parse(argc, argv);
     try {
         auto level = result["log-level"].as<std::string>();
@@ -77,8 +75,7 @@ int main(int argc, char **argv) {
             spdlog::set_level(spdlog::level::critical);
         else if(level == "trace")
             spdlog::set_level(spdlog::level::trace);
-
-    } catch(const std::exception &e) { spdlog::set_level(spdlog::level::off); }
+    } catch(const std::exception& e) { spdlog::set_level(spdlog::level::off); }
 
     if(result["help"].as<bool>()) {
         std::cout << options.help();
@@ -89,7 +86,7 @@ int main(int argc, char **argv) {
     try {
         regex_str = result["e"].as<std::string>();
         spdlog::debug("the PATTERN is {}", regex_str);
-    } catch(const std::domain_error &e) {
+    } catch(const std::domain_error& e) {
         spdlog::debug("no PATTERN input!");
         std::cout << options.help();
         exit(EXIT_SUCCESS);
@@ -101,13 +98,13 @@ int main(int argc, char **argv) {
     std::string pattern_type;
     try {
         pattern_type = result["T"].as<std::string>();
-    } catch(const std::exception &e) {
+    } catch(const std::exception& e) {
         // do nothing
     }
     // 构造正则表达式
     auto     pattern = std::make_shared<std::regex>(regex_str, set_pattern_flags(pattern_type, result["i"].as<bool>()));
 
-    istream *fs      = &cin;
+    istream* fs      = &cin;
     string   tmp;
     smatch   math_result;
     // 进行解析
