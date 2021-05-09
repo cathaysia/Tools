@@ -1,4 +1,10 @@
 #pragma once
+// 这里注意：由于 spdlog.h 与 libintl 存在冲突，因此 spdlog.h 必须放在 libintl.h 前面
+#include <spdlog/spdlog.h>
+#include <libintl.h>
+
+#define _(str) (str)
+
 
 namespace Config {
 constexpr const char* LOCALEDIR = "${LOCALEDIR}";

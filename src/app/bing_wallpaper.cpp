@@ -5,23 +5,19 @@
 
 // run behind
 #pragma comment(linker, "/subsystem:windows /entry:mainCRTStartup")
-#include <Config.h>
-#include <cpr/cpr.h>
-#include <fmt/format.h>
-#include <libintl.h>
-#ifdef fprintf
-    #undef fprintf
-    #include <spdlog/spdlog.h>
-#endif
-#include <windows.h>
 
 #include <chrono>
-#include <cxxopts.hpp>
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
 
-#define _(str) (gettext(str))
+#include <cpr/cpr.h>
+#include <fmt/format.h>
+#include <cxxopts.hpp>
+
+#include <windows.h>
+
+#include <Config.h>
 
 constexpr char BASE_URL[] = "https://cn.bing.com";
 constexpr char API[]      = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN";
