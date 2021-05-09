@@ -3,8 +3,6 @@
 //
 
 #include <Config.h>
-#include <libintl.h>
-#include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
 #include <fstream>
@@ -12,8 +10,6 @@
 #include <regex>
 
 using namespace std;
-
-#define _(str) (gettext(str))
 
 inline std::regex::flag_type set_pattern_flags(const string& pattern, bool icase) {
     using namespace std;
@@ -48,7 +44,7 @@ int main(int argc, char** argv) {
     options.add_options(_("Pattern selection and interpretation"))
         ("T,regex-pattern", _("basic, extenden, awk, grep, egrep, optimize, ESMAScript(default)"),cxxopts::value<std::string>())
         ("e,regexp", _("use PATTERNS for matching"), cxxopts::value<std::string>())
-        ("F, FILE", _(""), cxxopts::value<std::string>())
+        ("F, FILE", _("the file need be agreped"), cxxopts::value<std::string>())
         ("i,ignore-case",_("ignore case distinctions in patterns and data"))
         ("no-ignore-case", _("do not ignore case " "distinctions (default)"));
 
