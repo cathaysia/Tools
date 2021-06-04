@@ -34,7 +34,7 @@ foreach (file ${cpp_src_list})
             ${Intl_LIBRARIES}
             DnsQuery)
     if (MSVC)
-        target_compile_options(${target_name} PRIVATE /source-charset:utf-8)
+        target_compile_options(${target_name} PRIVATE /source-charset:utf-8 /MDd)
         # static build or not
         if (${VCPKG_TARGET_TRIPLET})
             string(FIND ${VCPKG_TARGET_TRIPLET} "static" vcpkg_static_build)

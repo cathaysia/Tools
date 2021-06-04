@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     textdomain(Config::PACKAGE);
 #ifdef _DEBUG
     spdlog::set_level(spdlog::level::debug);
-#elif
+#else
     spdlog::set_level(spdlog::level::info);
 #endif
     // 解析命令行
